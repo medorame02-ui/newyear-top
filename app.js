@@ -60,5 +60,20 @@
 	html += '</table>';
 	html += '<div class="foot"><img src="gift.png" alt="">С Новым годом!<img src="gift.png" alt=""></div>';
 
-	document.getElementById('a').innerHTML = html;
+	var box = document.getElementById('a');
+	box.innerHTML = html;
+
+	// подгоняем топ под размер окна игры, чтобы не было прокрутки
+	function fit() {
+		box.style.zoom = 1;
+		var need = box.scrollHeight + 4;
+		var have = window.innerHeight || document.documentElement.clientHeight;
+		if (need > have && have > 100) box.style.zoom = (have / need).toFixed(3);
+	}
+	document.documentElement.style.overflow = 'hidden';
+	document.body.style.overflow = 'hidden';
+	fit();
+	window.onresize = fit;
+	var imgs = box.getElementsByTagName('img');
+	for (var n = 0; n < imgs.length; n++) imgs[n].onload = fit;
 })();
